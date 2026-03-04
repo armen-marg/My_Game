@@ -943,20 +943,29 @@
         }
       }
 
+      function saveScore(name, score) {
+        fetch('/save_score', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, score })
+        });
+      }
+
       function gameOver() {
         state = 'over';
         finalEl.textContent = score;
+        const name = prompt('Game Over! Enter your name:') || 'Anonymous';
+        saveScore(name, score);
         overScr.classList.add('active');
       }
-    }
-    window.addEventListener('load', () => {
-      document.documentElement.requestFullscreen();
-    });
-    document.addEventListener('click', () => {
-      if (!document.fullscreenElement) {
-        document.documentElement.requestFullscreen();
-      }
-    }, { once: true });
+
+      document.addEventListener('click', () => {
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen();
+        }
+      }, { once: true });
+
+    } // closes launchGame()
   </script>
 </body>
 

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Leaderboard</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@200;400;700&family=DM+Mono&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: linear-gradient(235deg, rgb(12,5,52), rgb(35,4,48));
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: 'DM Mono', monospace;
+      color: white;
+      padding: 40px 20px;
+    }
+
+    h1 {
+      font-family: 'Unbounded', sans-serif;
+      font-weight: 200;
+      font-size: clamp(28px, 5vw, 56px);
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+      text-align: center;
+    }
+
+    .subtitle {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      color: rgba(255,255,255,0.35);
+      text-transform: uppercase;
+      margin-bottom: 48px;
+    }
+
+    table {
+      width: 100%;
+      max-width: 540px;
+      border-collapse: collapse;
+    }
+
+    thead tr {
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    th {
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      padding: 0 16px 16px;
+      text-align: left;
+    }
+
+    td {
+      padding: 16px;
+      font-size: 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    tr:first-child td { color: gold; }
+    tr:nth-child(2) td { color: silver; }
+    tr:nth-child(3) td { color: #cd7f32; }
+
+    .rank {
+      font-family: 'Unbounded', sans-serif;
+      font-weight: 700;
+      font-size: 18px;
+      width: 40px;
+    }
+
+    .score-val {
+      font-family: 'Unbounded', sans-serif;
+      font-weight: 700;
+      font-size: 20px;
+    }
+
+    .date-val {
+      font-size: 11px;
+      color: rgba(255,255,255,0.3);
+    }
+
+    .empty {
+      text-align: center;
+      color: rgba(255,255,255,0.3);
+      font-size: 13px;
+      padding: 48px 0;
+    }
+
+    .back-btn {
+      margin-top: 48px;
+      font-family: 'Unbounded', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: white;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      padding: 14px 36px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .back-btn:hover { background: rgba(255,255,255,0.2); }
+  </style>
+</head>
+<body>
+  <h1>leaderboard.</h1>
+  <p class="subtitle">top 10 survivors</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Score</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% if scores %}
+        {% for row in scores %}
+        <tr>
+          <td class="rank">{{ loop.index }}</td>
+          <td>{{ row[0] }}</td>
+          <td class="score-val">{{ row[1] }}</td>
+          <td class="date-val">{{ row[2][:10] }}</td>
+        </tr>
+        {% endfor %}
+      {% else %}
+        <tr><td colspan="4" class="empty">No records yet. Be the first!</td></tr>
+      {% endif %}
+    </tbody>
+  </table>
+
+  <a href="/" class="back-btn">← Play Again</a>
+</body>
+</html>
