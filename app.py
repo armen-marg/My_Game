@@ -37,6 +37,16 @@ def save_score():
         con.execute('INSERT INTO records (name, score) VALUES (?, ?)', (name, score))
     return jsonify({'status': 'ok'})
 
+@app.route('/check_record')
+def check_record():
+    score = request.args.get('score', 0, type=int)
+    with sqlite3.connect(DB) as con:
+        top = con.execute(
+            'SELECT score FROM records ORDER BY score DESC LIMIT 1'
+        ).fetchone()
+    is_record = top is None or score > top[0]
+    return jsonify({'is_record': is_record})
+
 if __name__ == '__main__':
     init_db()
     app.run(debug=True, host='0.0.0.0', port=5000)
